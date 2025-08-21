@@ -2,6 +2,9 @@ package isaac.app;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,13 +12,32 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Random;
 
+public class MainActivity extends AppCompatActivity {
+    TextView textViewResultado;
+    EditText editTextMin, editTextMax;
+
+    Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        button = findViewById(R.id.button);
+        editTextMin = findViewById(R.id.editTextMin);
+        editTextMax = findViewById(R.id.editTextMax);
+        textViewResultado = findViewById(R.id.textResult);
+
+        button.setOnClickListener(v -> {
+            int min = Integer.parseInt(editTextMin.getText().toString());
+            int max = Integer.parseInt(editTextMax.getText().toString());
+            int sorteado = 0;
+            sorteado = (int) Math.random() * (max - min) + min;
+
+            textViewResultado.setText(Integer.toString(sorteado));
+        });
         Log.d("ciclo_vida", "onCreate");
     }
     @Override
@@ -51,5 +73,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("ciclo_vida", "onDestroy");
     }
+
 }
 
