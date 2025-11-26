@@ -1,55 +1,51 @@
 package isaac.app;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
-
+    Fragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        Log.d("ciclo_vida", "onCreate");
-    }
-    @Override
-    protected void onStart(){
-        super.onStart();
-        Log.d("ciclo_vida", "onStart");
-    }
-    @Override
-    protected void onResume(){
-        super.onResume();
-        Log.d("ciclo_vida", "onResume");
-    }
-    @Override
-    protected void onPause(){
-        super.onPause();
-        Log.d("ciclo_vida", "onPause");
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        Button bA = findViewById(R.id.buttonFragmentA);
+        Button bB = findViewById(R.id.buttonFragmentoB);
+
+        bA.setOnClickListener(e ->{
+            fragment = new FragmentA();
+            abreFragmento();
+        });
+
+        bB.setOnClickListener(e->{
+            fragment = new FragmentB();
+            abreFragmento();
+        });
     }
 
-    @Override
-    protected void onRestart(){
-        super.onRestart();
-        Log.d("ciclo_vida", "onRestart");
-    }
+    public void abreFragmento(){
+        if (this.fragment != null){
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame,fragment);
+            transaction.commit();
+        }
 
-    @Override
-    protected void onStop(){
-        super.onStop();
-        Log.d("ciclo_vida", "onStop");
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        Log.d("ciclo_vida", "onDestroy");
     }
 }
-
