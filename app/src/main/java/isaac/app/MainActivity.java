@@ -1,10 +1,8 @@
 package isaac.app;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,8 +17,10 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    TextView textViewResultado;
+    EditText editTextMin, editTextMax;
+
     Button button;
-    EditText edPeso,edAltura;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,18 +28,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         button = findViewById(R.id.button);
-        edPeso = findViewById(R.id.editAltura);
-        edAltura = findViewById(R.id.editPeso);
+        editTextMin = findViewById(R.id.editTextMin);
+        editTextMax = findViewById(R.id.editTextMax);
+        textViewResultado = findViewById(R.id.textResult);
+
         button.setOnClickListener(v -> {
-            Intent intent = new Intent(this, IMCResultado.class);
-            float peso = Float.parseFloat(edPeso.getText().toString());
-            float altura = Float.parseFloat(edPeso.getText().toString());
+            int min = Integer.parseInt(editTextMin.getText().toString());
+            int max = Integer.parseInt(editTextMax.getText().toString());
+            int sorteado = 0;
+            sorteado = (int) (Math.random() * (max - min) + min);
 
-            intent.putExtra("altura", altura);
-            intent.putExtra("peso", peso);
-
-            startActivity(intent);
+            textViewResultado.setText(Integer.toString(sorteado));
         });
+        Log.d("ciclo_vida", "onCreate");
     }
     @Override
     protected void onStart(){
@@ -75,6 +76,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d("ciclo_vida", "onDestroy");
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState){
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putString("sorteado", textViewResultado.getText().toString());
+    }
+    @Override
+    public void onRestoreInstaceState(@NonNull Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        textViewResultado.setText(savedInstanceState.getString("sorteado"));
+    }
 
 }
 
