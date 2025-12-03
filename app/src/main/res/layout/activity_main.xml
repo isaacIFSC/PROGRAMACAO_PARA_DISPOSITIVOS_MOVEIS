@@ -7,24 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="23dp"
-        android:rotation="360"
-        android:rotationX="360"
-        android:rotationY="360"
-        android:text=" isaac passou aqui"
+    <isaac.app.SimplePaint
+        android:id="@+id/simplePaint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button"
+    <ImageView
+        android:id="@+id/idColorPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="teste do butao"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="478dp" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/simplePaint"
+        app:srcCompat="@drawable/colorpickerview_ic_bubble_big" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="100dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

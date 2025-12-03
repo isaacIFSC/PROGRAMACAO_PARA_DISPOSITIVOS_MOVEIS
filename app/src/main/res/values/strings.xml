@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="confirm">Ok</string>
+    <string name="cancel">cancelar</string>
 </resources>
